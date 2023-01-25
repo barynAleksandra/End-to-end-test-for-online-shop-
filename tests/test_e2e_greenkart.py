@@ -1,14 +1,16 @@
 import time
+import sys
+sys.path.insert(1, 'C:/Users/Aleksandra-Acer/PycharmProjects/pythonFramework/greencart/pageObjects')
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.select import Select
-from Chose_country import Chose_country
-from Cart import Cart
-from MainPage import MainPage
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions
+import Chose_countryPage
+import HomePage
+import CartPage
 
 # == ZMIENNE I LOKATORY ==
 discount_code = "rahulshettyacademy"
@@ -21,7 +23,7 @@ options.add_experimental_option('excludeSwitches', ['enable-logging'])
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
 driver.implicitly_wait(2)
 
-main_page = MainPage(driver)
+main_page = HomePage.MainPage(driver)
 main_page.open_page()
 main_page.search_item().send_keys("ber")
 time.sleep(2)
@@ -36,7 +38,7 @@ main_page.proceed().click()
 print(products)
 
 
-cart = Cart(driver)
+cart = CartPage.Cart(driver)
 cart.enter_promo().send_keys(discount_code)
 cart.apply().click()
 wait = WebDriverWait(driver, 6)
@@ -49,7 +51,7 @@ assert float(cart.price_disc().text) < total_p
 cart.order().click()
 
 
-chose_country = Chose_country(driver)
+chose_country = Chose_countryPage.Chose_country(driver)
 dropdown = Select(chose_country.select_country())
 dropdown.select_by_value("Poland")
 chose_country.terms_agree().click()

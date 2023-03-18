@@ -10,4 +10,4 @@ class BaseClass:
         wait = WebDriverWait(self.driver, 6).until(expected_conditions.presence_of_element_located(locator))
         
         
-# checking jenkins integration        
+# checking jenkins integration attempt: 2       
